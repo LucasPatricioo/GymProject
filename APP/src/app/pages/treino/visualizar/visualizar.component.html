@@ -1,0 +1,33 @@
+<div class="card">
+  <iframe class="card-img-top"
+          src="https://www.youtube.com/embed/yFKPFCnpFJs?si=rYTsdRAwkVjKaEHI"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+
+  <div class="card-body text-center">
+    <h5 class="card-title">{{cardTitulo}}</h5>
+    <div class="card-text" [innerHTML]="cardDescricao"></div>
+  </div>
+  <div class="card-footer">
+    <div class="list-group">
+      <div class="list-group-item">
+        <div class="card-text">Intervalo: {{intervalo}}</div>
+      </div>
+      <button class="list-group-item list-group-item-primary">
+        <div class="card-text">
+          <div class="row">
+            <div class="col-md-10 text-start">
+              Quantidade de repetições: {{quantidadeRepeticoesRealizadas}} de {{quantidadeRepeticoesConcluidas}}
+            </div>
+            <div class="col-md-2 text-end">
+              <i class="bi bi-plus-circle"></i>
+            </div>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
