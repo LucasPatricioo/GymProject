@@ -8,6 +8,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\APP\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\assets\images\" />
+    <Folder Include="src\app\shared\components\" />
   </ItemGroup>
 </Project>

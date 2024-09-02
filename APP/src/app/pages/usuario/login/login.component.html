@@ -1,0 +1,27 @@
+<app-seletor-tema></app-seletor-tema>
+<main class="form-signin w-100 m-auto">
+  <form>
+    <div class="col-md-12 text-center">
+      <img class="mb-4" src="assets/images/icon_homem_barra.png" alt="" width="162" height="147">
+    </div>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="emailLogin" placeholder="E-mail" [(ngModel)]="email" name="emailLogin">
+      <label for="emailLogin">E-mail</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="senhaLogin" placeholder="Senha" [(ngModel)]="senha" name="senhaLogin">
+      <label for="senhaLogin">Senha</label>
+    </div>
+
+    <div class="form-check text-start my-3">
+      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Mantenha-me conectado
+      </label>
+    </div>
+    <a class="btn btn-primary w-100 py-2" [routerLink]="['/treino']">Login</a>
+    <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
+  </form>
+</main>
+
