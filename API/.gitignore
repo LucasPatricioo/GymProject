@@ -1,0 +1,45 @@
+# Diretórios e arquivos temporários
+bin/
+obj/
+
+# Diretórios e arquivos específicos do Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Diretórios e arquivos específicos do Rider
+.idea/
+
+# Diretórios e arquivos de configuração de build
+*.csproj.user
+*.csproj.ide
+
+# Diretórios e arquivos de configuração do Visual Studio Code
+.vscode/
+
+# Diretórios e arquivos de configuração do npm
+node_modules/
+package-lock.json
+yarn.lock
+
+# Diretórios e arquivos de configuração do dotnet
+*.dbmdl
+*.bak
+*.log
+
+# Diretórios e arquivos temporários do sistema operacional
+*.swp
+*.tmp
+*.bak
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Arquivos de configuração local
+appsettings.Development.json
+appsettings.Local.json
+
+# Arquivos de publicação
+publish/

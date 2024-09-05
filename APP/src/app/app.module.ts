@@ -3,9 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TreinoModule } from './pages/treino/treino.module';
+import { TreinoModule } from './modules/treino/treino.module';
 import { SeletorTemaComponent } from './shared/components/seletor-tema/seletor-tema.component';
-import { UsuarioModule } from './pages/usuario/usuario.module';
+import { UsuarioModule } from './modules/usuario/usuario.module';
+import { HttpClientModule } from '@angular/common/http';
+import { AutenticacaoModule } from './modules/autenticacao/autenticacao.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { UsuarioModule } from './pages/usuario/usuario.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UsuarioModule
+    UsuarioModule,
+    AutenticacaoModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
