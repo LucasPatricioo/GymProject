@@ -2,6 +2,7 @@
 using API.Domain.Exceptions;
 using API.Domain.Models;
 using API.Interfaces.DAO;
+using Base;
 using Dapper;
 using MySql.Data.MySqlClient;
 
@@ -9,7 +10,7 @@ namespace API.Data.DAO
 {
     public class UsuarioDAO : IUsuarioDAO
     {
-        private readonly string _connectionString = "server=127.0.0.1;uid=root;pwd=admin;database=gymapi";
+        private readonly string _connectionString = ContextBase.ConnectionString;
 
         public IEnumerable<Usuario> BuscarUsuario()
         {
@@ -19,7 +20,7 @@ namespace API.Data.DAO
                 {
                     con.Open();
 
-                    string sql = "SELECT IdUsuario, NomeCompleto, DataNascimento, Email, Senha, DataCriado, Ativo FROM usuarios";
+                    string sql = "SELECT IdUsuario, NomeCompleto, DataNascimento, Email, Senha, DataCriado, Ativo, TipoUsuario FROM usuarios";
 
                     var listaUsuariosRecebidos = con.Query<Usuario>(sql);
 
@@ -28,7 +29,7 @@ namespace API.Data.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -40,14 +41,37 @@ namespace API.Data.DAO
                 {
                     con.Open();
 
-                    string sql = "SELECT IdUsuario, NomeCompleto, DataNascimento, Email, Senha, DataCriado, Ativo FROM usuarios WHERE IdUsuario = @IdUsuario";
+                    string sql = "SELECT IdUsuario, NomeCompleto, DataNascimento, Email, Senha, DataCriado, Ativo, TipoUsuario FROM usuarios WHERE IdUsuario = @IdUsuario";
 
                     Usuario usuarioRecebido = con.QuerySingle<Usuario>(sql, new { IdUsuario = idUsuario });
 
                     return usuarioRecebido;
                 }
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
+            {
+                throw new UsuarioNaoEncontradoException("Usuário não encontrado");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public Usuario BuscarUsuario(string emailUsuario)
+        {
+            try
+            {
+                using (MySqlConnection con = new MySqlConnection(_connectionString))
+                {
+                    con.Open();
+
+                    string sql = "SELECT IdUsuario, NomeCompleto, DataNascimento, Email, Senha, DataCriado, Ativo, TipoUsuario FROM usuarios WHERE Email = @Email";
+
+                    return con.QuerySingle<Usuario>(sql, new { Email = emailUsuario });
+                }
+            }
+            catch (InvalidOperationException)
             {
                 throw new UsuarioNaoEncontradoException("Usuário não encontrado");
             }
@@ -65,7 +89,7 @@ namespace API.Data.DAO
                 {
                     con.Open();
 
-                    string insertSql = "INSERT INTO usuarios(NomeCompleto, DataNascimento, Email, Senha) VALUES(@NomeCompleto, @DataNascimento, @Email, @Senha)";
+                    string insertSql = "INSERT INTO usuarios(NomeCompleto, DataNascimento, Email, Senha, TipoUsuario) VALUES(@NomeCompleto, @DataNascimento, @Email, @Senha, @TipoUsuario)";
 
                     con.Execute(insertSql, usuarioRecebido);
 
@@ -78,7 +102,7 @@ namespace API.Data.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -97,7 +121,7 @@ namespace API.Data.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -116,7 +140,7 @@ namespace API.Data.DAO
             }
             catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
     }

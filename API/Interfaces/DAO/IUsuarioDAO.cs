@@ -9,6 +9,8 @@ namespace API.Interfaces.DAO
 
         Usuario BuscarUsuario(int idUsuario);
 
+        Usuario BuscarUsuario(string emailUsuario);
+
         int CriarUsuario(CreateUsuarioDTO usuarioRecebido);
 
         void AtualizarUsuario(UpdateUsuarioDTO usuarioRecebido);

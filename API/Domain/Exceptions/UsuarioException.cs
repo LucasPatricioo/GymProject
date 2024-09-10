@@ -4,17 +4,17 @@
     {
         public UsuarioException() { }
 
-        public UsuarioException(string message) : base(message) { }
+        public UsuarioException(string mensagem) : base(mensagem) { }
 
-        public UsuarioException(string message, Exception innerException) : base(message, innerException) { }
+        public UsuarioException(string mensagem, Exception innerException) : base(mensagem, innerException) { }
     }
 
     public class UsuarioNaoEncontradoException : UsuarioException
     {
         public UsuarioNaoEncontradoException() { }
 
-        public UsuarioNaoEncontradoException(string message) : base(message) { }
+        public UsuarioNaoEncontradoException(string mensagem) : base(mensagem) { }
 
-        public UsuarioNaoEncontradoException(string message, Exception innerException) : base(message, innerException) { }
+        public UsuarioNaoEncontradoException(string mensagem, Exception innerException) : base(mensagem, innerException) { }
     }
 }

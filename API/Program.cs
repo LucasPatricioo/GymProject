@@ -2,13 +2,42 @@ using API.Data.DAO;
 using API.Interfaces.DAO;
 using API.Interfaces.Services;
 using API.Services;
+using Base;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//autenticacao
+// Chave secreta para assinatura do token
+var secretKey = AuthBase.SecretKey;
+
+// Adicionar autenticação JWT
+var key = Encoding.ASCII.GetBytes(secretKey);
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 
 // Add services to the container.
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuarioDAO, UsuarioDAO>();
+builder.Services.AddScoped<IAutenticacaoService, AutenticacaoService>();
 
 builder.Services.AddCors(options =>
 {
@@ -16,8 +45,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("https://meudominio.com", "https://meudominio2.com")
-                  .AllowAnyHeader()    
-                  .AllowAnyMethod();   
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 
     options.AddPolicy("AllowAllOrigins",
@@ -37,7 +66,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 //Aqui vou colocar quais politicas de cors vou habilitar, mais permissiva ou mais restrita
-app.UseCors("AllowAllOrigins"); 
+app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -48,6 +77,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Usar autenticação e autorização
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,7 +1,9 @@
 ﻿using API.Data.DTO.Usuario;
+using API.Domain.Enums;
 using API.Domain.Exceptions;
 using API.Domain.Models;
 using API.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -17,6 +19,7 @@ namespace API.Controllers
             _usuarioService = usuarioService;
         }
 
+        [Authorize]
         [HttpGet("BuscarUsuarios")]
         public IActionResult BuscarUsuario()
         {
@@ -37,6 +40,7 @@ namespace API.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("BuscarUsuario")]
         public IActionResult BuscarUsuario([FromQuery] int id)
         {
@@ -56,6 +60,7 @@ namespace API.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("CriarUsuario")]
         public IActionResult CriarUsuario([FromBody] CreateUsuarioDTO usuario)
         {
@@ -71,6 +76,7 @@ namespace API.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("AtualizarUsuario")]
         public IActionResult AtualizarUsuario([FromBody] UpdateUsuarioDTO usuario)
         {
@@ -86,6 +92,7 @@ namespace API.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("RemoverUsuario")]
         public IActionResult RemoverUsuario(int id)
         {
